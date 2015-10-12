@@ -4,6 +4,10 @@ def databases
     map { |s| begin s['attributes']['mysql']['password'] rescue nil end }.compact
 end
 
+def there_are_databases
+  databases.any?
+end
+
 desc 'Create database'
 task :crebas do
   databases.each do |database|
@@ -16,14 +20,16 @@ end
 
 desc 'Start local MySQL server'
 task :start_mysql do
-  print 'Starting MySQL... '
-  sh 'mysql.server start' do |ok, res|
-    if ! ok
-      puts '********************************************************'
-      puts 'FAIL!'
-      puts 'Are you sure MySQL is installed?'
-      puts 'Make sure `mysql.server start` works before trying again'
-      puts '********************************************************'
+  if there_are_databases
+    print 'Starting MySQL... '
+    sh 'mysql.server start' do |ok, res|
+      if ! ok
+        puts '********************************************************'
+        puts 'FAIL!'
+        puts 'Are you sure MySQL is installed?'
+        puts 'Make sure `mysql.server start` works before trying again'
+        puts '********************************************************'
+      end
     end
   end
 end
