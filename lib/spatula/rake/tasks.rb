@@ -1,7 +1,7 @@
 def databases
   require 'yaml'
   YAML.load(File.read('.kitchen.yml'))['suites'].
-    map { |s| begin s['attributes']['mysql']['password'] rescue nil end }.compact
+    map { |s| begin s['attributes']['mysql']['password'] rescue nil end }.uniq.compact
 end
 
 def there_are_databases
@@ -29,6 +29,8 @@ task :start_mysql do
         puts 'Are you sure MySQL is installed?'
         puts 'Make sure `mysql.server start` works before trying again'
         puts '********************************************************'
+      else
+        sleep 5
       end
     end
   end
