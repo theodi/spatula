@@ -2,4 +2,4 @@ suites:
   - name: production
     attributes:
       mysql:
-        password: csvlint
+        database: shark

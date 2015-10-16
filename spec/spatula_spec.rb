@@ -5,7 +5,7 @@ describe Spatula do
     expect(Spatula::VERSION).not_to be nil
   end
 
-  context 'extract DB details' do
+  context 'read YAML' do
     it 'reads a file' do
       expect(Spatula::load_yaml('spec/support/fixtures/simple.yml')).to be_a Hash
     end
@@ -15,7 +15,13 @@ describe Spatula do
     end
 
     it 'gets sensible data' do
-      expect(Spatula::load_yaml('spec/support/fixtures/simple.yml')['suites'].first).to be_a Hash
+      expect(Spatula::load_yaml('spec/support/fixtures/simple.yml')['suites'].first['name']).to eq 'production'
+    end
+  end
+
+  context 'assemble DB details' do
+    it 'gives correct defaults' do
+      expect(Spatula::databases('spec/support/fixtures/simple.yml').first['database']).to eq 'shark'
     end
   end
 end
