@@ -30,6 +30,11 @@ describe Spatula do
       expect(Spatula::databases('spec/support/fixtures/db-and-user.yml').first['username']).to eq 'bert'
       expect(Spatula::databases('spec/support/fixtures/db-and-user.yml').first['password']).to eq 'jellyfish'
     end
+
+    it 'understands when there is more than one DB' do
+      expect(Spatula::databases('spec/support/fixtures/multi-dbs.yml')[1]['database']).to eq 'starfish'
+      expect(Spatula::databases('spec/support/fixtures/multi-dbs.yml')[1]['password']).to eq 'hsifrats'
+    end
   end
 end
 

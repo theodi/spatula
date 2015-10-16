@@ -1,0 +1,11 @@
+suites:
+  - name: production
+    attributes:
+      mysql:
+        database: catfish
+
+  - name: staging
+    attributes:
+      mysql:
+        database: starfish
+        password: hsifrats
