@@ -22,7 +22,7 @@ describe Spatula do
   context 'assemble DB details' do
     it 'gives correct defaults' do
       expect(Spatula::databases('spec/support/fixtures/simple.yml').first['database']).to eq 'shark'
-      #expect(Spatula::databases('spec/support/fixtures/simple.yml').first['username']).to eq 'shark'
+      expect(Spatula::databases('spec/support/fixtures/simple.yml').first['username']).to eq 'shark'
     end
   end
 end

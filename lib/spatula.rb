@@ -9,7 +9,7 @@ module Spatula
 
   def self.databases path
     y = load_yaml path
-    y['suites'].map { |s| s['attributes']['mysql'] }
+    y['suites'].map { |s| Database.new s['attributes']['mysql'] }
   end
 
   class Database
