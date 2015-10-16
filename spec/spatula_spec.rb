@@ -22,6 +22,33 @@ describe Spatula do
   context 'assemble DB details' do
     it 'gives correct defaults' do
       expect(Spatula::databases('spec/support/fixtures/simple.yml').first['database']).to eq 'shark'
+      #expect(Spatula::databases('spec/support/fixtures/simple.yml').first['username']).to eq 'shark'
+    end
+  end
+end
+
+module Spatula
+  describe Database do
+    it 'has a database name' do
+      expect(described_class.new({
+        'database' => 'octopus'
+      })['database']).to eq 'octopus'
+    end
+
+    it 'generates sensible defaults' do
+      expect(described_class.new({
+        'database' => 'stingray'
+      })['username']).to eq 'stingray'
+    end
+
+    it 'populates the fields we give it' do
+      db = described_class.new({
+        'database' => 'barracuda',
+        'username' => 'nemo'
+      })
+
+      expect(db['username']).to eq 'nemo'
+      expect(db['password']).to eq 'barracuda'
     end
   end
 end
