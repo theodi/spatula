@@ -24,6 +24,12 @@ describe Spatula do
       expect(Spatula::databases('spec/support/fixtures/simple.yml').first['database']).to eq 'shark'
       expect(Spatula::databases('spec/support/fixtures/simple.yml').first['username']).to eq 'shark'
     end
+
+    it 'gives data that reflects the YAML' do
+      expect(Spatula::databases('spec/support/fixtures/db-and-user.yml').first['database']).to eq 'jellyfish'
+      expect(Spatula::databases('spec/support/fixtures/db-and-user.yml').first['username']).to eq 'bert'
+      expect(Spatula::databases('spec/support/fixtures/db-and-user.yml').first['password']).to eq 'jellyfish'
+    end
   end
 end
 
