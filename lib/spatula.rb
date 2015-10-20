@@ -13,4 +13,19 @@ module Spatula
     y = load_yaml path
     y['suites'].map { |s| Database.new s['attributes']['mysql'] }
   end
+
+  def self.start_mysql
+    system 'mysql.server start' do |ok, res|
+      if ! ok
+        STDERR.puts '********************************************************'
+        STDERR.puts 'FAIL!'
+        STDERR.puts 'Are you sure MySQL is installed?'
+        STDERR.puts 'Make sure `mysql.server start` works before trying again'
+        STDERR.puts '********************************************************'
+        exit
+      else
+        sleep 5
+      end
+    end
+  end
 end

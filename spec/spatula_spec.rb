@@ -36,4 +36,17 @@ describe Spatula do
       expect(Spatula::databases('spec/support/fixtures/multi-dbs.yml')[1]['password']).to eq 'hsifrats'
     end
   end
+
+  context 'start MySQL server' do
+    let(:stubbed_env) { create_stubbed_env }
+
+    it 'starts MySQL' do
+      system 'mysql.server stop'
+      Spatula::start_mysql
+      stdout, stderr, status = stubbed_env.execute(
+        'mysql -u root -e "show databases"',
+      )
+      expect(status.exitstatus).to eq 0
+    end
+  end
 end

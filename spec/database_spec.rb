@@ -25,6 +25,10 @@ module Spatula
     end
 
     context 'create databases' do
+      before(:context) do
+        system 'mysql.server start'
+      end
+
       let(:stubbed_env) { create_stubbed_env }
 
       it 'creates a DB' do
