@@ -14,6 +14,18 @@ module Spatula
     y['suites'].map { |s| Database.new s['attributes']['mysql'] }
   end
 
+  def self.create path
+    databases(path).each do |db|
+      db.create
+    end
+  end
+
+  def self.drop path
+    databases(path).each do |db|
+      db.drop
+    end
+  end
+
   def self.start_mysql
     system 'mysql.server start' do |ok, res|
       if ! ok
