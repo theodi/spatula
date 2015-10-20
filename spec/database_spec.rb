@@ -25,12 +25,36 @@ module Spatula
     end
 
     context 'create databases' do
+      let(:stubbed_env) { create_stubbed_env }
+
       it 'creates a DB' do
         db = described_class.new({
           'database' => 'pipefish'
         })
         db.create
-        expect(`mysql -u pipefish -ppipefish pipefish -e 'show tables'`).to eq 0
+
+        stdout, stderr, status = stubbed_env.execute(
+          'mysql -u pipefish -ppipefish pipefish -e "show tables"',
+        )
+        expect(status.exitstatus).to eq 0
+        db.drop
+      end
+
+      it 'drops a DB' do
+        db = described_class.new({
+          'database' => 'triggerfish'
+        })
+        db.create
+        stdout, stderr, status = stubbed_env.execute(
+          'mysql -u triggerfish -ptriggerfish triggerfish -e "show tables"',
+        )
+        expect(status.exitstatus).to eq 0
+
+        db.drop
+        stdout, stderr, status = stubbed_env.execute(
+          'mysql -u triggerfish -ptriggerfish triggerfish -e "show tables"',
+        )
+        expect(status.exitstatus).to eq 1
       end
     end
   end

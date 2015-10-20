@@ -1,4 +1,5 @@
 require 'yaml'
+require 'mysql2'
 
 require 'spatula/version'
 require 'spatula/database'
