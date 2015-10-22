@@ -1,0 +1,7 @@
+suites:
+  - name: production
+    provisioner:
+
+    attributes:
+      mysql:
+        host: <%= `ipconfig getifaddr en0` %>

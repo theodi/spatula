@@ -1,4 +1,5 @@
 require 'yaml'
+require 'erb'
 require 'mysql2'
 
 require 'spatula/version'
@@ -6,7 +7,7 @@ require 'spatula/database'
 
 module Spatula
   def self.load_yaml path
-    YAML.load File.read path
+    YAML.load ERB.new(File.read path).result
   end
 
   def self.databases path

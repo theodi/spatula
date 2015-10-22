@@ -21,6 +21,11 @@ describe Spatula do
     it 'is cool if there are no DBs' do
       expect(Spatula::any_dbs?('spec/support/fixtures/no-dbs.yml')).to eq false
     end
+
+    it 'knows how to deal with ERB' do
+    #  require 'pry' ; binding.pry
+      expect(Spatula::load_yaml('spec/support/fixtures/with-erb.yml')['suites'].first['attributes']['mysql']['host']).to_not match /ipconfig/
+    end
   end
 
   context 'assemble DB details' do
