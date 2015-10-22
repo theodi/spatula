@@ -17,6 +17,10 @@ describe Spatula do
     it 'gets sensible data' do
       expect(Spatula::load_yaml('spec/support/fixtures/simple.yml')['suites'].first['name']).to eq 'production'
     end
+
+    it 'is cool if there are no DBs' do
+      expect(Spatula::any_dbs?('spec/support/fixtures/no-dbs.yml')).to eq false
+    end
   end
 
   context 'assemble DB details' do

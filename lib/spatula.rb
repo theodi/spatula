@@ -11,7 +11,13 @@ module Spatula
 
   def self.databases path
     y = load_yaml path
+    return [] unless y['suites'].any? { |s| s['attributes'] }
+    return [] unless y['suites'].any? { |s| s['attributes']['mysql'] }
     y['suites'].map { |s| Database.new s['attributes']['mysql'] }
+  end
+
+  def self.any_dbs? path
+    databases(path).any?
   end
 
   def self.create path
