@@ -36,8 +36,8 @@ module Spatula
     y['suites'].map { |s| Database.new s['attributes']['mysql'].merge(a) }
   end
 
-  def self.any_dbs? path
-    databases(path).any?
+  def self.any_dbs? yaml, attributes = nil
+    databases(yaml, attributes).any?
   end
 
   def self.create yaml, attributes = nil
