@@ -16,6 +16,7 @@ module Spatula
   end
 
   def self.read_attributes path
+    return {} unless path
     default = hashish
 
     File.readlines(path).each do |line|
@@ -26,38 +27,27 @@ module Spatula
     default['mysql']
   end
 
-  def self.gather_data yaml:, attributes:
-  #  require 'pry' ; binding.pry
+  def self.databases yaml, attributes = nil
     y = load_yaml yaml
     a = read_attributes attributes
-
-    r = []
-    y['suites'].each do |suite|
-      r << (suite['attributes']['mysql'].merge a)
-    end
-
-    r
-  end
-
-  def self.databases path
-    y = load_yaml path
     return [] unless y['suites'].any? { |s| s['attributes'] }
     return [] unless y['suites'].any? { |s| s['attributes']['mysql'] }
-    y['suites'].map { |s| Database.new s['attributes']['mysql'] }
+
+    y['suites'].map { |s| Database.new s['attributes']['mysql'].merge(a) }
   end
 
   def self.any_dbs? path
     databases(path).any?
   end
 
-  def self.create path
-    databases(path).each do |db|
+  def self.create yaml, attributes = nil
+    databases(yaml, attributes).each do |db|
       db.create
     end
   end
 
-  def self.drop path
-    databases(path).each do |db|
+  def self.drop yaml, attributes = nil
+    databases(yaml, attributes).each do |db|
       db.drop
     end
   end

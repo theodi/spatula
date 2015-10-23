@@ -1,0 +1,6 @@
+suites:
+  - name: production
+    attributes:
+      mysql:
+        host: <%= `ipconfig getifaddr en0` %>
+        password: directory

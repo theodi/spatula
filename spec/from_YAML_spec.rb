@@ -35,4 +35,15 @@ describe Spatula do
       Spatula::drop 'spec/support/fixtures/multi-dbs.yml'
     end
   end
+
+  it 'creates databases from YAML and attributes' do
+    Spatula::create 'spec/support/fixtures/directory.yml', 'spec/support/fixtures/attributes/directory.rb'
+    stdout, stderr, status = stubbed_env.execute(
+      'mysql -u member_directory -pdirectory member_directory_production -e "show tables"',
+    )
+
+    expect(status.exitstatus).to eq 0
+
+    Spatula::drop 'spec/support/fixtures/directory.yml', 'spec/support/fixtures/attributes/directory.rb'
+  end
 end
