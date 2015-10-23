@@ -23,7 +23,6 @@ describe Spatula do
     end
 
     it 'knows how to deal with ERB' do
-    #  require 'pry' ; binding.pry
       expect(Spatula::load_yaml('spec/support/fixtures/with-erb.yml')['suites'].first['attributes']['mysql']['host']).to_not match /ipconfig/
     end
   end
@@ -49,7 +48,7 @@ describe Spatula do
   context 'start MySQL server' do
     let(:stubbed_env) { create_stubbed_env }
 
-    it 'starts MySQL' do
+    it 'starts MySQL', :mysql do
       system 'mysql.server stop'
       Spatula::start_mysql
       stdout, stderr, status = stubbed_env.execute(

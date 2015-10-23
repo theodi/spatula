@@ -26,6 +26,19 @@ module Spatula
     default['mysql']
   end
 
+  def self.gather_data yaml:, attributes:
+  #  require 'pry' ; binding.pry
+    y = load_yaml yaml
+    a = read_attributes attributes
+
+    r = []
+    y['suites'].each do |suite|
+      r << (suite['attributes']['mysql'].merge a)
+    end
+
+    r
+  end
+
   def self.databases path
     y = load_yaml path
     return [] unless y['suites'].any? { |s| s['attributes'] }
