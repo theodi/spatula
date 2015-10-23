@@ -20,7 +20,7 @@ module Spatula
     default = hashish
 
     File.readlines(path).each do |line|
-      eval line
+      eval line if line.match /mysql/
     end
 
     return nil if default['mysql'] == {}
