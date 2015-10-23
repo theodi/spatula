@@ -6,8 +6,24 @@ require 'spatula/version'
 require 'spatula/database'
 
 module Spatula
+  # this magic is due to @pkqk
+  def self.hashish
+    Hash.new { |h, k| h[k] = hashish }
+  end
+
   def self.load_yaml path
     YAML.load ERB.new(File.read path).result
+  end
+
+  def self.read_attributes path
+    default = hashish
+
+    File.readlines(path).each do |line|
+      eval line
+    end
+
+    return nil if default['mysql'] == {}
+    default['mysql']
   end
 
   def self.databases path
