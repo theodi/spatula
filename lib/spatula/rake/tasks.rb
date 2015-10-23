@@ -2,12 +2,12 @@ require 'spatula'
 
 desc 'Create database'
 task :crebas do
-  Spatula::create '.kitchen.yml'
+  Spatula::create '.kitchen.yml', 'attributes/default.rb'
 end
 
 desc 'Start local MySQL server'
 task :start_mysql do
-  if Spatula::any_dbs? '.kitchen.yml'
+  if Spatula::any_dbs? '.kitchen.yml', 'attributes/default.rb'
     Spatula::start_mysql
   end
 end
